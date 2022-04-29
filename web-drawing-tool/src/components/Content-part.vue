@@ -1,5 +1,7 @@
 <template>
-  <div>Content 캔버스 들어갈 곳</div>  
+  <v-container>
+    Canvas 삽입
+  </v-container>
 </template>
 
 <script>

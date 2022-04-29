@@ -1,5 +1,7 @@
 <template>
-  <div>Menu Componenent 우측 메뉴</div>  
+  <v-container>
+    Menu Componenent 우측 메뉴
+  </v-container>  
 </template>
 
 <script>

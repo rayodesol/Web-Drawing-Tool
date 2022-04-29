@@ -1,5 +1,10 @@
 <template>
-  <div>Menu Componenent 좌측 메뉴</div>  
+  <v-container>
+      <input type = "text" name = "search" value = "검색">
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+  </v-container>
 </template>
 
 <script>
@@ -14,4 +19,5 @@ div {
   background-color: #EEEEEE;
   height: 700px;
 }
+
 </style>>
