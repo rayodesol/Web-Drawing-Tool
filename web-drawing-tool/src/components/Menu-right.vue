@@ -1,5 +1,5 @@
 <template>
-  <div>Menu Componenent</div>  
+  <div>Menu Componenent 우측 메뉴</div>  
 </template>
 
 <script>

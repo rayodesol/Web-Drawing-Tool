@@ -1,5 +1,5 @@
 <template>
-  <div>Content</div>  
+  <div>Content 캔버스 들어갈 곳</div>  
 </template>
 
 <script>
