@@ -1,4 +1,3 @@
 SongMinseon
 test
-안녕하세요
-내용 추가
+새 레포지토리 연결
