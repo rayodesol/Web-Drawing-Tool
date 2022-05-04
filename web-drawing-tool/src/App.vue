@@ -32,22 +32,72 @@
       <div class="wrap">
 
       <div class = "a">
-      <v-btn
-        href="새로 만들기 링크"
-        target="_blank"
-        text
-      >
-        <span class = "font1">새로 만들기</span>
-      </v-btn>
+        <v-dialog 
+          v-model = "dialog"
+          scrollable
+          max-width = "500px"
+
+        >
+          <template v-slot:activator = "{ on, attrs }">
+            <v-btn 
+              color = "#F1C40F"
+              text
+              v-bind = "attrs"
+              v-on = "on"
+            >
+              <span class = "font1">새로 만들기</span>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-btn
+              @click = "dialog = false"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-card-title>카테고리</v-card-title>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-row align = "center">
+                <v-col align = "center">
+                  <v-btn
+                  @click = "dialog = false"
+                  >
+                  Free Drawing
+                  </v-btn>
+                  <v-btn
+                  @click = "dialog = false"
+                  >
+                  electric circuit diagram
+                  </v-btn>
+                  <v-btn
+                  @click = "dialog = false"
+                  >
+                  Sample category 
+                  </v-btn>
+
+
+                </v-col>
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
+
 
       <div class = "a">
       <v-btn
-        href="불러오기 링크"
-        target="_blank"
+        @click = "onButtonClick"
         text
       >
         <span class = "font1">불러오기</span>
+
+      <v-file-input
+        clearable = False
+        hide-input
+        text
+        accept=".draw"
+        
+      > </v-file-input>
       </v-btn>
       </div>
 
@@ -115,6 +165,8 @@ export default {
 }
 
 .toolbars{
+  white-space : nowrap;
+  justify-content: center;
   padding-left: 3%;
   padding-right: 3%;
   padding-top: 0.5%;
@@ -142,6 +194,7 @@ export default {
   background-color: #F1C40F; 
   color: #FFFFFF;
 }
+
 
 .font1{
   color: #FFFFFF;
