@@ -17,7 +17,7 @@ export default {
 div {
   flex: 1;
   background-color: #EEEEEE;
-  height: 700px;
+
 }
 
 </style>>

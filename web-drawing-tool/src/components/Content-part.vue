@@ -1,12 +1,18 @@
 <template>
   <v-container>
-    <canvas id="canvas" width="900" height="600"></canvas>
+    <fabric/>
+    <canvas class ="can" id="canvas" width="900" height="600"></canvas>
   </v-container>
 </template>
 
 <script>
+import { fabric } from "fabric";
+
 export default {
     name: 'Content-part',
+    components: {
+      fabric
+    },
     data() {
       return {
         canvas: null,
@@ -57,6 +63,20 @@ export default {
 <style scoped>
 div {
   flex: 3;
+  height: 700px;
   background-color: #E0E0E0;
+}
+.can {
+
+  margin: auto;
+  display: block;
+
+  top: 50%;
+  bottom: 50%;
+  left: 50%;
+  right: 50%;
+
+  background-color: white;
+
 }
 </style>>
