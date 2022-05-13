@@ -7,7 +7,6 @@
         <Content/>
         <Menu_right/>
       </div>
-
     </v-main>
   </v-app>
 </template>
@@ -25,7 +24,7 @@ export default {
     Header,
     Menu_left,
     Menu_right,
-    Content
+    Content,
   },
 
   data: () => ({

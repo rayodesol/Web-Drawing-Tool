@@ -53,7 +53,7 @@
           max-width = "500px"
 
         >
-          <template v-slot:activator = "{ on, attrs }">
+        <template v-slot:activator = "{ on, attrs }">
             <v-btn 
               color = "#F1C40F"
               text
@@ -64,33 +64,30 @@
             </v-btn>
           </template>
           <v-card>
-            <v-btn
-              @click = "dialog = false"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-card-title>카테고리</v-card-title>
+            <v-card-title>
+              카테고리
+              <v-spacer></v-spacer>
+              <v-btn icon @click = "close_dialog">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-card-title>
             <v-divider></v-divider>
             <v-card-actions>
               <v-row align = "center">
                 <v-col align = "center">
-                  <v-btn
-                  @click = "dialog = false"
-                  >
-                  Free Drawing
-                  </v-btn>
-                  <v-btn
-                  @click = "dialog = false"
-                  >
-                  electric circuit diagram
-                  </v-btn>
-                  <v-btn
-                  @click = "dialog = false"
-                  >
-                  Sample category 
-                  </v-btn>
-
-
+                  <fieldset class = "ma-10">
+                    <v-btn class = "ma-7" @click = "sample">
+                    Free Drawing
+                    </v-btn>
+                    <v-divider></v-divider>
+                    <v-btn class = "ma-7" @click = "sample">
+                    electric circuit diagram
+                    </v-btn>
+                    <v-divider></v-divider>
+                    <v-btn class = "ma-7" @click = "sample">
+                    Sample category 
+                    </v-btn>
+                  </fieldset>
                 </v-col>
               </v-row>
             </v-card-actions>
@@ -98,22 +95,15 @@
         </v-dialog>
       </div>
 
-
-      <div class = "a">
-      <v-btn
-        @click = "onButtonClick"
-        text
-      >
-        <span class = "font1">불러오기</span>
-
-      <v-file-input
-        clearable = False
-        hide-input
-        text
-        accept=".draw"
-        
-      > </v-file-input>
-      </v-btn>
+      <div class = "a" >
+        <v-btn text>
+          <input type = "file" 
+          id = "upload_button" 
+          style = "display : none" 
+          @change = "onFileChange" />
+          <label for = "upload_button" class = "font1">불러오기</label>
+        <!-- <v-file-input clearable = False hide-input text accept=".draw"></v-file-input> -->
+        </v-btn>
       </div>
 
       <div class = "a">
@@ -138,12 +128,30 @@
 
       </div>
 
+    <div class = "preview">
+      <img v-if = "url" :src = "url" />
+    </div>
+    
     </v-app-bar>
 </template>
 
 <script>
 export default {
 
+
+  data: () => ({
+    dialog: false,
+    url: null,
+  }),
+  methods: {
+    close_dialog() {
+      this.dialog = false;
+    },
+    onFileChange(event) {
+      const file = event.target.files[0];
+      this.url = URL.createObjectURL(file);
+    },
+  },
 };
 </script>
 
@@ -191,5 +199,15 @@ export default {
 .wrap{
   margin-right: 3%;
   display: flex;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.preview img {
+  max-width: 900px;
+  max-height: 600px;
 }
 </style>
