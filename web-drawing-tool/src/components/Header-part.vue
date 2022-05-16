@@ -1,8 +1,7 @@
 <template>
-    <v-app-bar
-      app
-      color="#EEEEEE"
-    >
+  <!--- <v-app-bar app color="#EEEEEE"> --->
+  <div>
+    <v-app-bar app color="#EEEEEE">
       <div class="program_name">
       Web Drawing Tool
       </div>
@@ -10,9 +9,9 @@
       <v-spacer></v-spacer>
       
       <div class="toolbars">
-      <input type = "text" name = "width" class = "width_height_box">
+      <input v-model = "canvas_width" class = "width_height_box">
       <v-icon>mdi-alpha-x</v-icon>
-      <input type = "text" name = "height" class = "width_height_box">
+      <input v-model = "canvas_height" class = "width_height_box">
       |
       <v-btn
         icon
@@ -46,14 +45,14 @@
 
       <div class="wrap">
 
-      <div class = "a">
-        <v-dialog 
-          v-model = "dialog"
-          scrollable
-          max-width = "500px"
+        <div class = "button_style">
+          <v-dialog 
+            v-model = "dialog"
+            scrollable
+            max-width = "500px"
 
-        >
-        <template v-slot:activator = "{ on, attrs }">
+          >
+          <template v-slot:activator = "{ on, attrs }">
             <v-btn 
               color = "#F1C40F"
               text
@@ -63,13 +62,10 @@
               <span class = "font1">새로 만들기</span>
             </v-btn>
           </template>
+          
           <v-card>
-            <v-card-title>
-              카테고리
-              <v-spacer></v-spacer>
-              <v-btn icon @click = "close_dialog">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
+            <v-card-title>카테고리<v-spacer></v-spacer>
+              <v-btn icon @click = "close_dialog"><v-icon>mdi-close</v-icon></v-btn>
             </v-card-title>
             <v-divider></v-divider>
             <v-card-actions>
@@ -95,7 +91,7 @@
         </v-dialog>
       </div>
 
-      <div class = "a" >
+      <div class = "button_style" >
         <v-btn text>
           <input type = "file" 
           id = "upload_button" 
@@ -106,7 +102,7 @@
         </v-btn>
       </div>
 
-      <div class = "a">
+      <div class = "button_style">
       <v-btn
         href="저장하기 링크"
         target="_blank"
@@ -116,7 +112,7 @@
       </v-btn>
       </div>
 
-      <div class = "a">
+      <div class = "button_style">
       <v-btn
         href="내보내기 링크"
         target="_blank"
@@ -132,16 +128,33 @@
       <img v-if = "url" :src = "url" />
     </div>
     
-    </v-app-bar>
+
+
+  </v-app-bar>
+  <v-main>
+
+    <Content :new_canvas_width="canvas_width"></Content>
+  </v-main>
+</div>
 </template>
 
 <script>
-export default {
+import Content from './Content-part.vue';
 
+export default {
+  name: 'Header-part',
+
+  components: {
+    Content,
+  },
 
   data: () => ({
     dialog: false,
     url: null,
+    canvas_width: 900,
+    canvas_height: 600
+    
+
   }),
   methods: {
     close_dialog() {
@@ -158,6 +171,7 @@ export default {
 <style scoped>
 
 .program_name{
+  height: auto;
   margin: 5%;
   font-size: 20px;
 }
@@ -184,7 +198,7 @@ export default {
   text-align: center;
 }
 
-.a{
+.button_style{
   margin: 1%;
   border-radius: 5px;
   background-color: #F1C40F; 
