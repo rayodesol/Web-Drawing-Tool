@@ -2,7 +2,8 @@
   <div class = "wrap">
     <Menu_left/>
     <v-container>
-      <canvas id = "canvas" class ="canvas" ref="can" width="900" height="600"></canvas>
+      <canvas id = "canvas" class ="canvas" ref="can"
+      width="900px" height="600px"></canvas>
     </v-container>
     <Menu_right/>
   </div>
@@ -18,7 +19,8 @@ import {fabric} from "fabric"
 export default {
   name: 'Content-part',
   props: {
-    new_canvas_width: {type:Number, default:900}
+    new_canvas_width: {type:String, default:'900px'},
+    new_canvas_height: {type:String, default:'600px'}
   },
 
   components: {
@@ -30,32 +32,39 @@ export default {
     const ref = this.$refs.can;
     let canvas = new fabric.Canvas(ref , { isDrawingMode: true});
     canvas.add();
+    this.canvas.addEventListener('')
   },
   
   watch: {
     'new_canvas_width': function(){
-      alert(this.new_canvas_width);
-      alert(document.getElementById("canvas").style.width);
-      this.canvas_width = this.new_canvas_width;
-      alert(this.canvas_width);
-      document.getElementById("canvas").style.width = this.canvas_width;
-      alert(document.getElementById("canvas").style.width);
+      //alert(this.new_canvas_width);
+      this.canvas_width = this.new_canvas_width + "px";
+      let canvas = document.getElementById("canvas");
+      canvas.style.width = this.canvas_width;
     },
 
+    'new_canvas_height': function(){
+      //alert(this.new_canvas_height);
+      this.canvas_height = this.new_canvas_height + "px";
+      let canvas = document.getElementById("canvas");
+      canvas.style.height = this.canvas_height;
+    }
   },
   data(){
     return {
-      canvas_width: null,
+      canvas_width: '900px',
+      canvas_height: '600px'
     }
   },
-/*
-  method: {
+
+  /*method: {
     changeSize() {
-      alert("실행");
-      document.getElementById("canvas").style.width = this.canvas_width;
+      alert("실행", this.canvas_width);
+      let size = document.getElementById("canvas");
+      size.style.width = this.canvas_width;
     }
-  }
-  */
+  }*/
+
 };
 
 </script>
@@ -65,8 +74,9 @@ div {
   flex: 3;
   background-color: #E0E0E0;
 }
-.canvas {
-  width: 900;
+#canvas {
+  width: 900px;
+  height: 600px;
   background-color: white;
 
 }

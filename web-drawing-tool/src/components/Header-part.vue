@@ -133,7 +133,8 @@
   </v-app-bar>
   <v-main>
 
-    <Content :new_canvas_width="canvas_width"></Content>
+    <Content :new_canvas_width="canvas_width"
+            :new_canvas_height="canvas_height"></Content>
   </v-main>
 </div>
 </template>
