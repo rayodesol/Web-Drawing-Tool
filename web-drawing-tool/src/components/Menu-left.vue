@@ -29,9 +29,9 @@
           <!-- <v-list-item 
             v-for = "child in item.items" :key = "child.title">
             <v-img :src ="child.title"></v-img>
-             <v-list-item-content>
+              <v-list-item-content>
               <v-list-item-title v-text = "child.title"></v-list-item-title>
-             </v-list-item-content> <class = "image_size">
+              </v-list-item-content> <class = "image_size">
           </v-list-item> -->
 
         </v-list-group>
