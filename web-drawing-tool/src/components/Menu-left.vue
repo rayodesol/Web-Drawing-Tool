@@ -8,7 +8,8 @@
         type = "text"
         append-icon = "mdi-magnify"
       ></v-text-field>
-      <v-list>
+
+      <v-list style="max-height: 500px" class="overflow-y-auto">
         <v-list-group 
           v-for = "item in items" :key = "item.title" 
           v-model = "item.active" :prepend-icon = "item.action"
@@ -200,7 +201,16 @@ export default {
         ]
       },
     ],
-  }),
+  }
+  
+  ),
+
+  methods: {
+    click_content(){
+      let a = 'aaa';
+      this.$parent.add_content_to_canvas(a);
+    }
+  }
   
 
 };
@@ -217,4 +227,4 @@ div {
   height: 100px;
 } */
 
-</style>>
+</style>

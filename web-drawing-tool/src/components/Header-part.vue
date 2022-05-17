@@ -1,47 +1,42 @@
 <template>
-  <!--- <v-app-bar app color="#EEEEEE"> --->
-  <div>
-    <v-app-bar app color="#EEEEEE">
-      <div class="program_name">
-      Web Drawing Tool
-      </div>
+<div>
+  <v-app-bar app color="#EEEEEE">
+    <div class="program_name">Web Drawing Tool</div>
 
-      <v-spacer></v-spacer>
-      
-      <div class="toolbars">
-      <input v-model = "canvas_width" class = "width_height_box">
+    <v-spacer></v-spacer>
+
+    <div class="toolbars">
+      <input
+        type="text"
+        name="width"
+        class="width_height_box"
+        value="900"
+        @change="changeWidth"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+      />
       <v-icon>mdi-alpha-x</v-icon>
-      <input v-model = "canvas_height" class = "width_height_box">
+      <input
+        type="text"
+        name="height"
+        class="width_height_box"
+        value="600"
+        @change="changeHeight"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+      />
       |
-      <v-btn
-        icon
-      ><v-icon>mdi-undo</v-icon></v-btn>
-      <v-btn
-        icon
-      ><v-icon>mdi-redo</v-icon></v-btn>
-      <v-btn
-        icon
-      ><v-icon>mdi-content-cut</v-icon></v-btn>
-      <v-btn
-        icon
-      ><v-icon>mdi-content-paste</v-icon></v-btn>
-      <v-btn
-        icon
-      ><v-icon>mdi-content-copy</v-icon></v-btn>
-      <v-btn
-        icon
-      ><v-icon>mdi-delete</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-undo</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-redo</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-content-cut</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-content-paste</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-content-copy</v-icon></v-btn>
+      <v-btn icon><v-icon>mdi-delete</v-icon></v-btn>
       |
-      <v-btn
-        icon
-      ><v-icon>mdi-magnify-minus-outline</v-icon></v-btn>
-      <input type = "text" name = "ratio" value = "100%" class = "canvas_ratio_box">
-      <v-btn
-        icon
-      ><v-icon>mdi-magnify-plus-outline</v-icon></v-btn>
-      </div>
+      <v-btn icon><v-icon>mdi-magnify-minus-outline</v-icon></v-btn>
+      <input type="text" name="ratio" value="100%" class="canvas_ratio_box" />
+      <v-btn icon><v-icon>mdi-magnify-plus-outline</v-icon></v-btn>
+    </div>
 
-      <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
       <div class="wrap">
 
@@ -72,11 +67,11 @@
               <v-row align = "center">
                 <v-col align = "center">
                   <fieldset class = "ma-10">
-                    <v-btn class = "ma-7" @click = "sample">
+                    <v-btn class = "ma-7" @click = "create_new_free_drawing">
                     Free Drawing
                     </v-btn>
                     <v-divider></v-divider>
-                    <v-btn class = "ma-7" @click = "sample">
+                    <v-btn class = "ma-7" @click = "create_new_clectric_circuit">
                     electric circuit diagram
                     </v-btn>
                     <v-divider></v-divider>
@@ -159,22 +154,15 @@
     <div class = "preview">
       <img v-if = "url" :src = "url" />
     </div>
-    
-
-
   </v-app-bar>
   <v-main>
-
-    <Content 
-      :new_canvas_width="canvas_width"
-      :new_canvas_height="canvas_height"
-      ref="Content"></Content>
+    <Content ref="childComponent"/>
   </v-main>
 </div>
 </template>
 
 <script>
-//import { component } from 'vue/types/umd';
+import { data } from "../data";
 import Content from './Content-part.vue';
 
 export default {
@@ -187,13 +175,9 @@ export default {
   data: () => ({
     make_new_file_dialog: false,
     export_file_dialog: false,
-    url: null,
-    canvas_width: 900,
-    canvas_height: 600,
-    export_file_png: false,
-    export_file_pdf: false
-
+    url: null, 
   }),
+
   methods: {
     close_make_button() {
       this.make_new_file_dialog = false;
@@ -201,72 +185,72 @@ export default {
     close_export_button() {
       this.export_file_dialog = false;
     },
-
     onFileChange(event) {
       const file = event.target.files[0];
       this.url = URL.createObjectURL(file);
     },
-
-    click_save_png() {
-      console.log("실행");
-      //console.log(this.$refs.contentComponent);
-      this.$refs.Content.export_to_png();
+    changeWidth(event) {
+      data.width = event.target.value;
     },
-    
-    check_save_pdf() {
-      this.export_file_pdf = true;
+    changeHeight(event) {
+      data.height = event.target.value;
     },
 
-    downloadImage() {
-      //this.href
+    create_new_free_drawing(){
+      alert("a"); 
+    },
+    create_new_clectric_circuit(){
+      alert("a");
+    },
+
+    click_save_png(){
+      alert('png로 내보내기');
+      this.$refs.childComponent.export_to_png();
     }
   },
 };
 </script>
 
 <style scoped>
-
-.program_name{
-  height: auto;
+.program_name {
   margin: 5%;
   font-size: 20px;
 }
 
-.toolbars{
-  white-space : nowrap;
+.toolbars {
+  white-space: nowrap;
   justify-content: center;
   padding-left: 3%;
   padding-right: 3%;
-  
+
   border-radius: 5px;
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
 }
 
-.width_height_box{
+.width_height_box {
   width: 50px;
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   text-align: center;
 }
-.canvas_ratio_box{
+.canvas_ratio_box {
   width: 50px;
   border: 1px solid;
   text-align: center;
 }
 
-.button_style{
+.button_style {
   margin: 1%;
   border-radius: 5px;
-  background-color: #F1C40F; 
-  color: #FFFFFF;
+  background-color: #f1c40f;
+  color: #ffffff;
 }
 
-
-.font1{
-  color: #FFFFFF;
+.font1 {
+  color: #ffffff;
 }
 
-.wrap{
+.wrap {
   margin-right: 3%;
   display: flex;
 }
