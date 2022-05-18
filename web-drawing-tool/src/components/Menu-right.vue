@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <Edit_text/>
     <v-tabs
       v-model="tab"
       grow
@@ -24,17 +23,23 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+
+    <Edit_text/>
+    <p></p>
+    <Edit_design/>
   </v-container>  
 </template>
 
 <script>
 import Edit_text from './Edit-text.vue';
+import Edit_design from './Edit-design.vue';
 
 export default {
   name: 'Menu-right',
 
   components: {
     Edit_text,
+    Edit_design,
   },
 
   data: () => ({
