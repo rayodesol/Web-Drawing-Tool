@@ -1,6 +1,6 @@
 <template>
   <div class = "wrap">
-    <Menu_left/>
+    <Menu_left @symbolClick="drawSymbol"/>
       <v-container>
       <canvas class="canvas" ref="can" width="900" height="600"></canvas>
       <v-btn @click = "mode_change">모드변경</v-btn>
@@ -30,6 +30,7 @@ export default {
     canvas.add();
   },
 
+
   methods: {
     mode_change(){
       canvas.isDrawingMode = !canvas.isDrawingMode;
@@ -57,6 +58,15 @@ export default {
       alert('호출됨');
       canvas.add(content);
     },
+
+    drawSymbol(image){
+      console.log(image)
+      fabric.loadSVGFromURL(image, (objects) => {
+        var obj = fabric.util.groupSVGElements(objects)
+        canvas.add(obj)
+      });
+      canvas.renderAll();
+    }
   },
 };
 
