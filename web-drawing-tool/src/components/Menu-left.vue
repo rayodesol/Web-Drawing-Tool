@@ -23,7 +23,8 @@
           </template>
 
           <v-list-item
-            v-for = "child in item.items" :key = "child.image">
+            v-for = "child in item.items" :key = "child.image"
+            @click ="clickSymbol(child.image)">
             <img :src = "child.image">
           </v-list-item>
 
@@ -209,6 +210,9 @@ export default {
     click_content(){
       let a = 'aaa';
       this.$parent.add_content_to_canvas(a);
+    },
+    clickSymbol(image){
+      this.$emit('symbolClick', image)
     }
   }
   
