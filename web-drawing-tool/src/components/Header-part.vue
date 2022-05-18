@@ -47,11 +47,7 @@
 
         <div class = "button_style">
           <v-dialog 
-<<<<<<< HEAD
-            v-model = "dialog"
-=======
             v-model = "make_new_file_dialog"
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
             scrollable
             max-width = "500px"
 
@@ -69,11 +65,7 @@
           
           <v-card>
             <v-card-title>카테고리<v-spacer></v-spacer>
-<<<<<<< HEAD
-              <v-btn icon @click = "close_dialog"><v-icon>mdi-close</v-icon></v-btn>
-=======
               <v-btn icon @click = "close_make_button"><v-icon>mdi-close</v-icon></v-btn>
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
             </v-card-title>
             <v-divider></v-divider>
             <v-card-actions>
@@ -121,15 +113,6 @@
       </div>
 
       <div class = "button_style">
-<<<<<<< HEAD
-      <v-btn
-        href="내보내기 링크"
-        target="_blank"
-        text
-      >
-        <span class = "font1">내보내기</span>
-      </v-btn>
-=======
         <v-dialog 
             v-model = "export_file_dialog"
             scrollable
@@ -169,7 +152,6 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
       </div>
 
       </div>
@@ -183,24 +165,16 @@
   </v-app-bar>
   <v-main>
 
-<<<<<<< HEAD
-    <Content :new_canvas_width="canvas_width"
-            :new_canvas_height="canvas_height"></Content>
-=======
     <Content 
       :new_canvas_width="canvas_width"
       :new_canvas_height="canvas_height"
       ref="Content"></Content>
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
   </v-main>
 </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 //import { component } from 'vue/types/umd';
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
 import Content from './Content-part.vue';
 
 export default {
@@ -215,14 +189,9 @@ export default {
     export_file_dialog: false,
     url: null,
     canvas_width: 900,
-<<<<<<< HEAD
-    canvas_height: 600
-    
-=======
     canvas_height: 600,
     export_file_png: false,
     export_file_pdf: false
->>>>>>> 85eb2a390891828d837a6a648d1821d777195174
 
   }),
   methods: {
