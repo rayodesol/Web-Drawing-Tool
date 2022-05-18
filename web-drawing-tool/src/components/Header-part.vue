@@ -24,12 +24,12 @@
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
       />
       |
-      <v-btn icon><v-icon>mdi-undo</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-redo</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-content-cut</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-content-paste</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-content-copy</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-delete</v-icon></v-btn>
+      <v-btn icon @click = "click_undo"><v-icon>mdi-undo</v-icon></v-btn>
+      <v-btn icon @click = "click_redo"><v-icon>mdi-redo</v-icon></v-btn>
+      <v-btn icon @click = "click_cut"><v-icon>mdi-content-cut</v-icon></v-btn>
+      <v-btn icon @click = "click_paste"><v-icon>mdi-content-paste</v-icon></v-btn>
+      <v-btn icon @click = "click_copy"><v-icon>mdi-content-copy</v-icon></v-btn>
+      <v-btn icon @click = "click_delete"><v-icon>mdi-delete</v-icon></v-btn>
       |
       <v-btn icon><v-icon>mdi-magnify-minus-outline</v-icon></v-btn>
       <input type="text" name="ratio" value="100%" class="canvas_ratio_box" />
@@ -195,6 +195,30 @@ export default {
     changeHeight(event) {
       data.height = event.target.value;
     },
+    click_undo(){
+      console.log('click undo');
+      this.$refs.childComponent.undo();
+    },
+    click_redo(){
+      console.log('click redo');
+      this.$refs.childComponent.redo();
+    },
+    click_cut(){
+      console.log('click paste');
+      this.$refs.childComponent.cutSymbol();
+    },
+    click_paste(){
+      console.log('click paste');
+      this.$refs.childComponent.pasteSymbol();
+    },
+    click_copy(){
+      console.log('click copy');
+      this.$refs.childComponent.copySymbol();
+    },
+    click_delete(){
+      console.log('click delete');
+      this.$refs.childComponent.deleteSymbol();
+    },
 
     create_new_free_drawing(){
       alert("a"); 
@@ -204,9 +228,9 @@ export default {
     },
 
     click_save_png(){
-      alert('png로 내보내기');
+      console.log('png로 내보내기');
       this.$refs.childComponent.export_to_png();
-    }
+    },
   },
 };
 </script>

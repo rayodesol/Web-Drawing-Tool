@@ -15,6 +15,7 @@ import { data } from "../data";
 import Menu_left from './Menu-left.vue';
 import Menu_right from './Menu-right.vue';
 let canvas;
+let clipboard = null;
 
 export default {
   name: "Content-part",
@@ -26,10 +27,13 @@ export default {
 
   mounted() {
     const ref = this.$refs.can;
-    canvas = new fabric.Canvas(ref, { isDrawingMode: true });
+    canvas = new fabric.Canvas(ref, { isDrawingMode: false });
     canvas.add();
   },
 
+  data: () => ({
+
+  }),
 
   methods: {
     mode_change(){
@@ -54,19 +58,77 @@ export default {
       document.body.removeChild(link);
     },
 
-    add_content_to_canvas(content){
-      alert('호출됨');
-      canvas.add(content);
-    },
-
     drawSymbol(image){
-      console.log(image)
+      console.log(image);
       fabric.loadSVGFromURL(image, (objects) => {
         var obj = fabric.util.groupSVGElements(objects)
         canvas.add(obj)
       });
       canvas.renderAll();
-    }
+    },
+
+    cutSymbol(){
+      canvas.getActiveObject().clone(function(cloned) {
+        clipboard = cloned;
+      });
+      var selected = canvas.getActiveObjects(),
+      selGroup = new fabric.ActiveSelection(selected, {
+        canvas: canvas
+      });
+      selGroup.forEachObject(function(obj) {
+        canvas.remove(obj);
+      });
+      canvas.renderAll();
+    },
+    
+    copySymbol(){
+      canvas.getActiveObject().clone(function(cloned) {
+        clipboard = cloned;
+      });
+    },
+
+    pasteSymbol(){
+      // clone again, so you can do multiple copies.
+        clipboard.clone(function(clonedObj) {
+          canvas.discardActiveObject();
+          clonedObj.set({
+            left: clonedObj.left + 10,
+            top: clonedObj.top + 10,
+            evented: true,
+          });
+          if (clonedObj.type === 'activeSelection') {
+              // active selection needs a reference to the canvas.
+              clonedObj.canvas = canvas;
+              clonedObj.forEachObject(function (obj) {
+                  canvas.add(obj);
+              });
+              // this should solve the unselectability
+              clonedObj.setCoords();
+          } else {
+            canvas.add(clonedObj);
+          }
+          canvas.setActiveObject(clonedObj);
+          canvas.requestRenderAll();
+      });
+    },
+
+    deleteSymbol(){
+      var selected = canvas.getActiveObjects(),
+      selGroup = new fabric.ActiveSelection(selected, {
+        canvas: canvas
+      });
+
+      if (selGroup){
+        if (confirm('선택된 객체를 삭제할까요?')) {
+          selGroup.forEachObject(function(obj) {
+            canvas.remove(obj);
+          });
+        }
+      }else{
+        return false;
+      }
+      canvas.renderAll();
+    },
   },
 };
 
