@@ -214,7 +214,7 @@ export default {
 <style scoped>
 div {
   flex: 1;
-
+  background-color: #EEEEEE;
 }
 
 .image_size {
