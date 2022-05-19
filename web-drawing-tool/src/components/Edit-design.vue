@@ -85,7 +85,8 @@
                 :items="line_type"
                 label="선 종류"
                 rounded
-                ></v-overflow-btn>
+                >
+                </v-overflow-btn>
             </v-col>
 
             <v-col cols="6" md="4">
@@ -132,12 +133,20 @@ export default {
         column: null,
         
         line_type: [
-            { text: '나눔고딕' },
-            { text: '맑은고딕' },
-            { text: '굴림' },
-            { text: 'Arial' },
-            { text: 'Calibri' },
-            { text: 'Courier' },
+            //{ text: '나눔고딕' },
+            //{ text: '맑은고딕' },
+            //{ text: '굴림' },
+            //{ text: 'Arial' },
+            //{ text: 'Calibri' },
+            //{ text: 'Courier' },
+            { color: "red", icon: "mdi-circle" },
+            { color: "orange", icon: "mdi-circle" },
+            { color: "yellow", icon: "mdi-circle" },
+            { color: "green", icon: "mdi-circle" },
+            { color: "blue", icon: "mdi-circle" },
+            { color: "navy", icon: "mdi-circle" },
+            { color: "purple", icon: "mdi-circle" },
+            { color: "black", icon: "mdi-circle" },
         ],
 
         line_weight: [
