@@ -28,24 +28,99 @@
         
         <p>객체 서식</p>
 
+        <!--------------------------- 1 ---------------------------->
+        <v-sheet
+            class="mx-auto"
+            elevation="8"
+            max-width="800"
+        >
+            <v-slide-group
+                v-model="model"
+                class="pa-4"
+                active-class="success"
+                show-arrows
+            >
+                <v-slide-item
+                    v-for="n in 10"
+                    :key="n"
+                    v-slot="{ active, toggle }"
+                >
+                    <v-card
+                        :color="active ? undefined : 'grey lighten-1'"
+                        class="ma-4"
+                        height="100"
+                        width="100"
+                        @click="toggle"
+                    >
+                        <v-row
+                            class="fill-height"
+                            align="center"
+                            justify="center"
+                        >
+                            <v-scale-transition>
+                                <v-icon
+                                    v-if="active"
+                                    color="white"
+                                    size="40"
+                                    v-text="'mdi-check-circle-outline'"
+                                ></v-icon>
+                            </v-scale-transition>
+                        </v-row>
+                    </v-card>
+                </v-slide-item>
+            </v-slide-group>
+        </v-sheet>
+        <!------------------------- 1 ------------------------------>
+
         <p></p>
         <v-divider></v-divider>
         <p></p>
 
         <p>선</p>
-        <!------------------------------------------------------->
+        <!------------------------- 2 ------------------------------>
         <v-row>
-            <v-col cols="6" md="4">선 종류</v-col>
-            <v-col cols="6" md="4">두께</v-col>
+            <v-col cols="6" md="4">
+                <!--선 종류 overflow buttons-->
+                <v-overflow-btn
+                :items="line_type"
+                label="선 종류"
+                rounded
+                ></v-overflow-btn>
+            </v-col>
+
+            <v-col cols="6" md="4">
+                <!--선 두께 overflow buttons-->
+                <v-overflow-btn
+                :items="line_weight"
+                label="선 두께"
+                rounded
+                ></v-overflow-btn>
+            </v-col>
+
             <v-col cols="6" md="4">색상 선택 바???</v-col>
         </v-row>
-        <!------------------------------------------------------->
+        <!------------------------ 2 ------------------------------->
 
         <p></p>
         <v-divider></v-divider>
         <p></p>
 
-        채우기
+        <!------------------------- 3 ------------------------------>
+        <v-row>
+            <v-col cols="6" md="4">채우기</v-col>
+
+            <v-col cols="6" md="4">
+                <!--무늬 종류 overflow buttons-->
+                <v-overflow-btn
+                :items="pattern_type"
+                label="무늬 종류"
+                rounded
+                ></v-overflow-btn>
+            </v-col>
+
+            <v-col cols="6" md="4">색상 선택 바???</v-col>
+        </v-row>
+        <!-------------------------- 3 ----------------------------->
     </v-container>
 </template>
 
@@ -53,10 +128,30 @@
 export default {
     name: 'Edit-design',
 
-    data () {
-        return {
-            column: null,
-        }
-    },
+    data: () => ({
+        column: null,
+        
+        line_type: [
+            { text: '나눔고딕' },
+            { text: '맑은고딕' },
+            { text: '굴림' },
+            { text: 'Arial' },
+            { text: 'Calibri' },
+            { text: 'Courier' },
+        ],
+
+        line_weight: [
+            '1pt', '2pt', '3pt', '4pt', '5pt', '6pt', '7pt', '8pt', '9pt', '10pt',
+        ],
+
+        pattern_type: [
+            { text: '나눔고딕' },
+            { text: '맑은고딕' },
+            { text: '굴림' },
+            { text: 'Arial' },
+            { text: 'Calibri' },
+            { text: 'Courier' },
+        ],
+    }),
 }
 </script>

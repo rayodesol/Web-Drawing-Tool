@@ -14,6 +14,7 @@
                 :items="font"
                 label="글꼴"
                 item-value="text"
+                rounded
                 ></v-overflow-btn>
             </v-col>
 
@@ -28,6 +29,7 @@
                 class="my-2"
                 :items="font_size"
                 label="글자크기"
+                rounded
                 ></v-overflow-btn>
             </v-col>
         </v-row>
