@@ -156,7 +156,7 @@
     </div>
   </v-app-bar>
   <v-main>
-    <Content ref="childComponent"/>
+    <Content ref="childComponent" :canvas_mode="canvas_mode" />
   </v-main>
 </div>
 </template>
@@ -173,6 +173,7 @@ export default {
   },
 
   data: () => ({
+    canvas_mode: 'Menu_left_d',
     make_new_file_dialog: false,
     export_file_dialog: false,
     url: null, 
@@ -221,10 +222,16 @@ export default {
     },
 
     create_new_free_drawing(){
-      alert("a"); 
+      console.log("FREE DRAWING"); 
+      this.canvas_mode = "Menu_left_fd";
+      this.make_new_file_dialog = false;
+      this.$refs.childComponent.clearCanvas();
     },
     create_new_clectric_circuit(){
-      alert("a");
+      console.log("ELECTRIC CIRCUIT DIAGRAM");
+      this.canvas_mode = "Menu_left_ecd";
+      this.make_new_file_dialog = false;
+      this.$refs.childComponent.clearCanvas();
     },
 
     click_save_png(){

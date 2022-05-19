@@ -1,9 +1,11 @@
 <template>
   <div class = "wrap">
-    <Menu_left @symbolClick="drawSymbol"/>
+    <component v-bind:is="mode"
+    @symbolClick="drawSymbol" @clickPen="pen_mode" @clickShapes="shapes_mode"
+    @clickText="add_text" @clickImage="add_image"/>
       <v-container>
       <canvas class="canvas" ref="can" width="900" height="600"></canvas>
-      <v-btn @click = "mode_change">모드변경</v-btn>
+      <!--<v-btn @click = "mode_change">모드변경</v-btn>-->
       </v-container>
     <Menu_right/>
   </div>
@@ -12,17 +14,39 @@
 <script>
 import { fabric } from "fabric";
 import { data } from "../data";
-import Menu_left from './Menu-left.vue';
+import Menu_left_d from './Menu-left-default.vue';
+import Menu_left_fd from './Menu-left-free_drawing.vue';
+import Menu_left_ecd from './Menu-left-electric_circuit_diagram.vue';
 import Menu_right from './Menu-right.vue';
 let canvas;
 let clipboard = null;
 
 export default {
   name: "Content-part",
+  props: {
+    canvas_mode: {
+        default: "Menu_left_d",
+        type: String
+    }
+  },
+  watch: {
+    'canvas_mode': function(){
+      console.log('모드 변경 감지');
+      this.mode = this.canvas_mode;
+    }
+  },
 
   components: {
-    Menu_left,
+    Menu_left_d,
+    Menu_left_fd,
+    Menu_left_ecd,
     Menu_right,
+  },
+
+  data(){
+    return{
+      mode: this.canvas_mode
+    }
   },
 
   mounted() {
@@ -31,14 +55,9 @@ export default {
     canvas.add();
   },
 
-  data: () => ({
-
-  }),
-
   methods: {
     mode_change(){
       canvas.isDrawingMode = !canvas.isDrawingMode;
-      //alert(canvas.isDrawingMode);
       canvas.renderAll();
     },
     
@@ -129,6 +148,105 @@ export default {
       }
       canvas.renderAll();
     },
+
+    clearCanvas(){
+      canvas.clear();
+    },
+
+    pen_mode(color){
+      canvas.isDrawingMode = true;
+      canvas.freeDrawingBrush.color = color;
+      canvas.renderAll();
+    },
+
+    shapes_mode(shape){
+      canvas.isDrawingMode = false;
+      if (shape == 'Circle'){
+        let circle = new fabric.Circle({
+          radius: 100, fill: 'green', left: 100, top: 100
+        });
+        canvas.add(circle);
+      
+      }else if(shape == 'Triangle'){ 
+        let triangle = new fabric.Triangle({
+          width: 100, height: 100, fill: 'blue', left: 100, top: 100
+        });
+        canvas.add(triangle);
+
+      }else if(shape == 'Rect'){
+        let rect = new fabric.Rect({
+          width: 100, height: 100, fill: 'purple', left: 100, top: 100
+        });
+        canvas.add(rect);
+
+      }else if(shape == 'Line'){
+        var point1;
+        canvas.on('mouse:down', function (options) {
+          var x = options.e.clientX - canvas._offset.left;
+          var y = options.e.clientY - canvas._offset.top;
+          var circle = new fabric.Circle({
+            left: x,
+            top: y,
+            fill: 'red',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true,
+            radius: 1,
+            hoverCursor: 'default'
+          });
+          canvas.add(circle);
+          if (point1 === undefined) {
+              point1 = new fabric.Point(x, y)
+          } else {
+            canvas.add(new fabric.Line([point1.x, point1.y, x, y], {
+              stroke: 'black',
+              hasControls: false,
+              hasBorders: false,
+              lockMovementX: true,
+              lockMovementY: true,
+              hoverCursor: 'default'
+          }))
+        point1 = undefined;
+        }
+      });
+      }
+
+      canvas.renderAll();
+      canvas.on();
+    },
+
+    add_text(){
+      canvas.add(new fabric.Text('Sample_text', { 
+        fontFamily: 'Delicious_500', 
+        left: 100, 
+        top: 100 
+      }));
+    },
+
+    add_image(e){
+      var reader = new FileReader();
+      reader.onload = function (event){
+        var imgObj = new Image();
+        imgObj.src = event.target.result;
+        imgObj.onload = function () {
+          var image = new fabric.Image(imgObj);
+          image.set({
+                angle: 0,
+                padding: 10,
+                cornersize:10,
+                height:110,
+                width:110,
+          });
+          canvas.centerObject(image);
+          canvas.add(image);
+          canvas.renderAll();
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
   },
 };
 

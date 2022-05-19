@@ -28,13 +28,6 @@
               <img :src = "child.image" class = "image_size">
           </v-list-item>
 
-          <!-- <v-list-item 
-            v-for = "child in item.items" :key = "child.title">
-            <v-img :src ="child.title"></v-img>
-              <v-list-item-content>
-              <v-list-item-title v-text = "child.title"></v-list-item-title>
-              </v-list-item-content> <class = "image_size">
-          </v-list-item> -->
 
         </v-list-group>
       </v-list>
@@ -221,26 +214,13 @@ export default {
 <style scoped>
 div {
   flex: 1;
-  background-color: #EEEEEE;
-}
 
-/*
-.five-cols {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-} */
+}
 
 .image_size {
   width: 100px;
   height: 100px;
 } 
-
-/* 변경사항
-1) <script> 내에서 @/assets/전기설계심볼 -> @/assets/Electronic circuit symbols 로 변경
-2) Capacitors/Trmmer_Variable_Capacitor_US__1_.svg -> Trimmer_Variable_Capacitor_US__1_.svg 로 변경
-3) v-list 내에서 심볼 크기 조절
-*/
-
 
 </style>
 
