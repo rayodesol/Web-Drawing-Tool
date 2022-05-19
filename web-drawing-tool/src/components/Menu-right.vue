@@ -5,14 +5,14 @@
       grow
     >
       <v-tab
-        v-for="item in items"
-        :key="item.tab"
-      >
-        {{ item.tab }}
-      </v-tab>
-      <!-- <component :is="currentView" :mainId="data.mainId" :keyId="data.keyId" /> -->
+        v-for="item in tabs"
+        :key="item.id"
+        @click="move_page(item.id)"
+        v-show="item.enable === 'Y'"
+      >{{ item.name }}</v-tab>
     </v-tabs>
 
+<<<<<<< HEAD
     <v-tabs-items v-model="tab">
       <v-tab-item
         v-for="item in items"
@@ -27,6 +27,9 @@
     <Edit_text/>
     <p></p>
     <Edit_design/>
+=======
+    <component :is="currentView" :mainId = "data.mainId" :keyId="data.keyId" />
+>>>>>>> 8f6b11fe0efd265e2cc3144cb710373b551141f9
   </v-container>  
 </template>
 
@@ -43,19 +46,37 @@ export default {
   },
 
   data: () => ({
-    tab: null,
-    items: [
-      { tab: '디자인', content: 'Tab 1 Content' },
-      { tab: '글꼴', content: '글꼴' },
-      { tab: '객체 리스트', content: 'Tab 3 Content' },
-    ]
-  })
+    currentView: 'Edit_design',
+    tabs:[ 
+      {id: 'Edit_design', name: '디자인', enable:'Y'},
+      {id: 'Edit_text', name: '글꼴', enable:'Y'},
+      {id: 'objectList', name: '객체 리스트', enable:'Y'},
+    ],
+    data:{
+      mainId: '',
+      keyId: '',
+      seletedTab: 'Edit_design',
+    },
+    tab: 0,
+  }),
+  async created(){
+    this.currentView = 'Edit_design';
+  },
+  mounted(){
+    this.tab = 1;
+  },
+  methods: {
+    move_page(id){
+      this.currentView = id;
+    },
+  }
 };
 </script>
 
 <style scoped>
 div {
   flex: 1; 
+  max-width: 600px;
   background-color: #EEEEEE;
 }
 </style>

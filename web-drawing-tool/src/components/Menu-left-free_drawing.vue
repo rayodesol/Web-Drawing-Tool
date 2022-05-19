@@ -9,7 +9,8 @@
         append-icon = "mdi-magnify"
       ></v-text-field>
 
-  <v-list style="max-height: 500px" class="overflow-y-auto">
+  <v-list style="max-height: 500px" class="overflow-y-auto"
+  background-color = "#EEEEEE">
     <v-subheader>Free Drawing</v-subheader>
         <v-list-group 
           v-for = "item in items" :key = "item.title" 
@@ -114,23 +115,10 @@ div {
   background-color: #EEEEEE;
 }
 
-/*
-.five-cols {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-} */
-
 .image_size {
   width: 100px;
   height: 100px;
 } 
-
-/* 변경사항
-1) <script> 내에서 @/assets/전기설계심볼 -> @/assets/Electronic circuit symbols 로 변경
-2) Capacitors/Trmmer_Variable_Capacitor_US__1_.svg -> Trimmer_Variable_Capacitor_US__1_.svg 로 변경
-3) v-list 내에서 심볼 크기 조절
-*/
-
 
 </style>
 

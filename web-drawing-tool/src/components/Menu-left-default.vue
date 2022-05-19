@@ -25,6 +25,8 @@ export default {
 
 <style scoped>
 div {
+  min-width: 300px;
+  max-width: 600px;
   flex: 1;
 
 }

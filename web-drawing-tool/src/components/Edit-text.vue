@@ -134,3 +134,9 @@ export default {
     }),
 }
 </script>
+
+<style scoped>
+div {
+    max-width: 400px;
+}
+</style>
