@@ -156,7 +156,13 @@
     </div>
   </v-app-bar>
   <v-main>
-    <Content ref="childComponent" :canvas_mode="canvas_mode" />
+    <Content ref="childComponent" 
+    :canvas_mode="canvas_mode"
+    :isSave="isSave" 
+    :isLoad="isLoad"
+    @afterSave="isSave=false"
+    @afterLoad="isLoad=false"
+    />
   </v-main>
 </div>
 </template>
@@ -177,6 +183,8 @@ export default {
     make_new_file_dialog: false,
     export_file_dialog: false,
     url: null, 
+    isSave: false,
+    isLoad: false
   }),
 
   methods: {

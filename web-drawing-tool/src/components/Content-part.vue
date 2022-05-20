@@ -1,6 +1,8 @@
 <template>
   <div class = "wrap">
-    <component v-bind:is="mode"
+    <component 
+    class="left-menu"
+    v-bind:is="mode"
     @symbolClick="drawSymbol" @clickPen="pen_mode" @clickShapes="shapes_mode"
     @clickText="add_text" @clickImage="add_image"/>
       <v-container>
@@ -25,15 +27,37 @@ export default {
   name: "Content-part",
   props: {
     canvas_mode: {
-        default: "Menu_left_d",
-        type: String
+      default: "Menu_left_d",
+      type: String
+    },
+    
+    isSave:{
+      default: false,
+      type: Boolean
+    },
+    isLoad:{
+      default: false,
+      type:Boolean
     }
   },
   watch: {
     'canvas_mode': function(){
       console.log('모드 변경 감지');
       this.mode = this.canvas_mode;
+    },
+
+    'isSave' : function(){
+      if(this.isSave){
+        this.saveCanvas()
+      }
+    },
+
+    'isLoad': function(){
+      if(this.isLoad){
+        this.loadCanvas()
+      }
     }
+
   },
 
   components: {
@@ -238,36 +262,48 @@ export default {
 
     add_text(){
       let input = prompt('텍스트를 입력해주세요.', 'Sample_text');
-      canvas.add(new fabric.Text(input, { 
+      let textbox = new fabric.Textbox(input, { 
+        
+        editable: true,
         fontFamily: '굴림', 
         left: 100, 
         top: 100 
-      }));
+      });
+      canvas.add(textbox);
+      canvas.centerObjectH(textbox);
     },
 
-    add_image(e){
-      var reader = new FileReader();
-      reader.onload = function (event){
-        var imgObj = new Image();
-        imgObj.src = event.target.result;
-        imgObj.onload = function () {
-          var image = new fabric.Image(imgObj);
-          image.set({
+    saveCanvas(){
+      this.saveData = canvas.toJSON()
+      console.log('save')
+
+      this.$emit('afterSave')
+
+    },
+
+    loadCanvas(){
+      console.log('load')
+      if(this.saveData){
+        canvas.loadFromJSON(this.saveData, canvas.renderAll.bind(canvas));
+      }
+
+      this.$emit('afterLoad')
+    },
+
+    add_image(url){
+      //받은 url을 이용하여 캔버스에 이미지 객체 add. 크기조절 하세요
+      fabric.Image.fromURL(url, function(myImg) {
+
+        var img1 = myImg.set({                 
                 angle: 0,
                 padding: 10,
                 cornersize:10,
                 height:110,
-                width:110,
-          });
-          canvas.centerObject(image);
-          canvas.add(image);
-          canvas.renderAll();
-        }
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    },
+                width:110,});
+        canvas.add(img1); 
+      });
 
-
+    }
   },
 
 };
@@ -276,6 +312,7 @@ setInterval(() => {
   canvas.setWidth(data.width);
   canvas.setHeight(data.height);
 }, 100);
+
 </script>
 
 <style scoped>
