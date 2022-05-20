@@ -186,9 +186,8 @@ export default {
     close_export_button() {
       this.export_file_dialog = false;
     },
-    onFileChange(event) {
-      const file = event.target.files[0];
-      this.url = URL.createObjectURL(file);
+    onFileChange() {
+      this.$refs.childComponent.uploadImage(event);
     },
     changeWidth(event) {
       data.width = event.target.value;
@@ -282,7 +281,7 @@ export default {
 }
 
 .wrap {
-  margin-right: 3%;
+  margin-right: 2%;
   display: flex;
 }
 

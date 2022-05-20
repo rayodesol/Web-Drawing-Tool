@@ -46,7 +46,7 @@ export default {
     this.currentView = 'Edit_design';
   },
   mounted(){
-    this.tab = 1;
+    this.tab = 0;
   },
   methods: {
     move_page(id){

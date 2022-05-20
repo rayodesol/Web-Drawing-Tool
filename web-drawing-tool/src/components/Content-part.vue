@@ -60,7 +60,25 @@ export default {
       canvas.isDrawingMode = !canvas.isDrawingMode;
       canvas.renderAll();
     },
-    
+
+    uploadImage(event) {
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var image = new Image();
+        image.src = event.target.result;
+        image.onload = function() {
+          var img = new fabric.Image(image);
+          img.set({
+            height: 900,
+            widht: 900,
+          });
+          img.scaleToWidth(300);
+          canvas.add(img).setActiveObject(img).renderAll();
+        }
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    },
+
     export_to_png(){
       const dataURL = canvas.toDataURL({
         width: canvas.width,
@@ -219,8 +237,9 @@ export default {
     },
 
     add_text(){
-      canvas.add(new fabric.Text('Sample_text', { 
-        fontFamily: 'Delicious_500', 
+      let input = prompt('텍스트를 입력해주세요.', 'Sample_text');
+      canvas.add(new fabric.Text(input, { 
+        fontFamily: '굴림', 
         left: 100, 
         top: 100 
       }));
@@ -246,8 +265,11 @@ export default {
         }
       }
       reader.readAsDataURL(e.target.files[0]);
-    }
+    },
+
+
   },
+
 };
 
 setInterval(() => {
