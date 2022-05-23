@@ -90,7 +90,8 @@
         <v-btn text>
           <input type = "file" 
           id = "upload_button" 
-          style = "display : none" 
+          style = "display : none"
+
           @change = "onFileChange" />
           <label for = "upload_button" class = "font1">불러오기</label>
         <!-- <v-file-input clearable = False hide-input text accept=".draw"></v-file-input> -->
@@ -186,10 +187,22 @@ export default {
     close_export_button() {
       this.export_file_dialog = false;
     },
+
+    /*
+    click_upload_image() {
+      this.$refs.childComponent.uploadImage();
+    }, */
+
+    onFileChange() {
+      this.$refs.childComponent.uploadImage(event);
+    },
+
+    /*
     onFileChange(event) {
       const file = event.target.files[0];
       this.url = URL.createObjectURL(file);
-    },
+    }, */
+
     changeWidth(event) {
       data.width = event.target.value;
     },

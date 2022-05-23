@@ -12,24 +12,7 @@
       >{{ item.name }}</v-tab>
     </v-tabs>
 
-<<<<<<< HEAD
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in items"
-        :key="item.tab"
-      >
-        <v-card flat>
-          <v-card-text>{{ item.content }}</v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-
-    <Edit_text/>
-    <p></p>
-    <Edit_design/>
-=======
     <component :is="currentView" :mainId = "data.mainId" :keyId="data.keyId" />
->>>>>>> 8f6b11fe0efd265e2cc3144cb710373b551141f9
   </v-container>  
 </template>
 
@@ -63,7 +46,7 @@ export default {
     this.currentView = 'Edit_design';
   },
   mounted(){
-    this.tab = 1;
+    this.tab = 0;
   },
   methods: {
     move_page(id){

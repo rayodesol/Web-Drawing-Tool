@@ -2,7 +2,7 @@
   <div class = "wrap">
     <component v-bind:is="mode"
     @symbolClick="drawSymbol" @clickPen="pen_mode" @clickShapes="shapes_mode"
-    @clickText="add_text" @clickImage="add_image"/>
+    @clickText="add_text" @clickImage="add_image" @changeCanvasColor="change_canvas_bgcolor" />
       <v-container>
       <canvas class="canvas" ref="can" width="900" height="600"></canvas>
       <!--<v-btn @click = "mode_change">모드변경</v-btn>-->
@@ -18,6 +18,7 @@ import Menu_left_d from './Menu-left-default.vue';
 import Menu_left_fd from './Menu-left-free_drawing.vue';
 import Menu_left_ecd from './Menu-left-electric_circuit_diagram.vue';
 import Menu_right from './Menu-right.vue';
+import Edit_design from './Edit-design.vue';
 let canvas;
 let clipboard = null;
 
@@ -41,6 +42,7 @@ export default {
     Menu_left_fd,
     Menu_left_ecd,
     Menu_right,
+    Edit_design,
   },
 
   data(){
@@ -60,7 +62,25 @@ export default {
       canvas.isDrawingMode = !canvas.isDrawingMode;
       canvas.renderAll();
     },
-    
+
+    uploadImage(event) {
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var image = new Image();
+        image.src = event.target.result;
+        image.onload = function() {
+          var img = new fabric.Image(image);
+          img.set({
+            height: 100,
+            width: 100,
+          });
+          img.scaleToWidth(200);
+          canvas.add(img).setActiveObject(img).renderAll();
+        }
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    },
+      
     export_to_png(){
       const dataURL = canvas.toDataURL({
         width: canvas.width,
@@ -226,6 +246,7 @@ export default {
       }));
     },
 
+    /*
     add_image(e){
       var reader = new FileReader();
       reader.onload = function (event){
@@ -246,6 +267,11 @@ export default {
         }
       }
       reader.readAsDataURL(e.target.files[0]);
+    } */
+
+    // 민선_기능 구현 test
+    change_canvas_bgcolor(color){
+      canvas.setBackgroundColor(color, canvas.renderAll.bind(canvas));
     }
   },
 };
