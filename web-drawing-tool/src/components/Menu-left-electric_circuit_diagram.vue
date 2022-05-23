@@ -217,6 +217,11 @@ div {
   background-color: #EEEEEE;
 }
 
+.v-list-item {
+  display: inline-block;
+  padding: 0px;
+}
+
 .image_size {
   width: 100px;
   height: 100px;

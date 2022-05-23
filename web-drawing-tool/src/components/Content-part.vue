@@ -1,8 +1,10 @@
 <template>
   <div class = "wrap">
-    <component v-bind:is="mode"
+    <component 
+    class="left-menu"
+    v-bind:is="mode"
     @symbolClick="drawSymbol" @clickPen="pen_mode" @clickShapes="shapes_mode"
-    @clickText="add_text" @clickImage="add_image" @changeCanvasColor="change_canvas_bgcolor" />
+    @clickText="add_text" @clickImage="add_image"/>
       <v-container>
       <canvas class="canvas" ref="can" width="900" height="600"></canvas>
       <!--<v-btn @click = "mode_change">모드변경</v-btn>-->
@@ -18,7 +20,6 @@ import Menu_left_d from './Menu-left-default.vue';
 import Menu_left_fd from './Menu-left-free_drawing.vue';
 import Menu_left_ecd from './Menu-left-electric_circuit_diagram.vue';
 import Menu_right from './Menu-right.vue';
-import Edit_design from './Edit-design.vue';
 let canvas;
 let clipboard = null;
 
@@ -26,15 +27,37 @@ export default {
   name: "Content-part",
   props: {
     canvas_mode: {
-        default: "Menu_left_d",
-        type: String
+      default: "Menu_left_d",
+      type: String
+    },
+    
+    isSave:{
+      default: false,
+      type: Boolean
+    },
+    isLoad:{
+      default: false,
+      type:Boolean
     }
   },
   watch: {
     'canvas_mode': function(){
       console.log('모드 변경 감지');
       this.mode = this.canvas_mode;
+    },
+
+    'isSave' : function(){
+      if(this.isSave){
+        this.saveCanvas()
+      }
+    },
+
+    'isLoad': function(){
+      if(this.isLoad){
+        this.loadCanvas()
+      }
     }
+
   },
 
   components: {
@@ -42,7 +65,6 @@ export default {
     Menu_left_fd,
     Menu_left_ecd,
     Menu_right,
-    Edit_design,
   },
 
   data(){
@@ -71,16 +93,16 @@ export default {
         image.onload = function() {
           var img = new fabric.Image(image);
           img.set({
-            height: 100,
-            width: 100,
+            height: 900,
+            widht: 900,
           });
-          img.scaleToWidth(200);
+          img.scaleToWidth(300);
           canvas.add(img).setActiveObject(img).renderAll();
         }
       }
       reader.readAsDataURL(event.target.files[0]);
     },
-      
+
     export_to_png(){
       const dataURL = canvas.toDataURL({
         width: canvas.width,
@@ -239,47 +261,58 @@ export default {
     },
 
     add_text(){
-      canvas.add(new fabric.Text('Sample_text', { 
-        fontFamily: 'Delicious_500', 
+      let input = prompt('텍스트를 입력해주세요.', 'Sample_text');
+      let textbox = new fabric.Textbox(input, { 
+        
+        editable: true,
+        fontFamily: '굴림', 
         left: 100, 
         top: 100 
-      }));
+      });
+      canvas.add(textbox);
+      canvas.centerObjectH(textbox);
     },
 
-    /*
-    add_image(e){
-      var reader = new FileReader();
-      reader.onload = function (event){
-        var imgObj = new Image();
-        imgObj.src = event.target.result;
-        imgObj.onload = function () {
-          var image = new fabric.Image(imgObj);
-          image.set({
+    saveCanvas(){
+      this.saveData = canvas.toJSON()
+      console.log('save')
+
+      this.$emit('afterSave')
+
+    },
+
+    loadCanvas(){
+      console.log('load')
+      if(this.saveData){
+        canvas.loadFromJSON(this.saveData, canvas.renderAll.bind(canvas));
+      }
+
+      this.$emit('afterLoad')
+    },
+
+    add_image(url){
+      //받은 url을 이용하여 캔버스에 이미지 객체 add. 크기조절 하세요
+      fabric.Image.fromURL(url, function(myImg) {
+
+        var img1 = myImg.set({                 
                 angle: 0,
                 padding: 10,
                 cornersize:10,
                 height:110,
-                width:110,
-          });
-          canvas.centerObject(image);
-          canvas.add(image);
-          canvas.renderAll();
-        }
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    } */
+                width:110,});
+        canvas.add(img1); 
+      });
 
-    // 민선_기능 구현 test
-    change_canvas_bgcolor(color){
-      canvas.setBackgroundColor(color, canvas.renderAll.bind(canvas));
     }
   },
+
 };
 
 setInterval(() => {
   canvas.setWidth(data.width);
   canvas.setHeight(data.height);
 }, 100);
+
 </script>
 
 <style scoped>

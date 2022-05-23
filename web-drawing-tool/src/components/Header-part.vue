@@ -90,8 +90,7 @@
         <v-btn text>
           <input type = "file" 
           id = "upload_button" 
-          style = "display : none"
-
+          style = "display : none" 
           @change = "onFileChange" />
           <label for = "upload_button" class = "font1">불러오기</label>
         <!-- <v-file-input clearable = False hide-input text accept=".draw"></v-file-input> -->
@@ -157,7 +156,13 @@
     </div>
   </v-app-bar>
   <v-main>
-    <Content ref="childComponent" :canvas_mode="canvas_mode" />
+    <Content ref="childComponent" 
+    :canvas_mode="canvas_mode"
+    :isSave="isSave" 
+    :isLoad="isLoad"
+    @afterSave="isSave=false"
+    @afterLoad="isLoad=false"
+    />
   </v-main>
 </div>
 </template>
@@ -178,6 +183,8 @@ export default {
     make_new_file_dialog: false,
     export_file_dialog: false,
     url: null, 
+    isSave: false,
+    isLoad: false
   }),
 
   methods: {
@@ -187,22 +194,9 @@ export default {
     close_export_button() {
       this.export_file_dialog = false;
     },
-
-    /*
-    click_upload_image() {
-      this.$refs.childComponent.uploadImage();
-    }, */
-
     onFileChange() {
       this.$refs.childComponent.uploadImage(event);
     },
-
-    /*
-    onFileChange(event) {
-      const file = event.target.files[0];
-      this.url = URL.createObjectURL(file);
-    }, */
-
     changeWidth(event) {
       data.width = event.target.value;
     },
@@ -295,7 +289,7 @@ export default {
 }
 
 .wrap {
-  margin-right: 3%;
+  margin-right: 2%;
   display: flex;
 }
 

@@ -24,7 +24,7 @@
         </v-list-item-content>
       </template>
 
-      <v-list-item
+      <v-list-item class = "symbolList"
         v-for = "item in item.items" :key = "item.color"
         @click="click_menu(item.action, item.color, item.shape)">
         <v-icon :color = "item.color">{{item.icon}}</v-icon>
@@ -115,10 +115,14 @@ div {
   background-color: #EEEEEE;
 }
 
+.v-list-item {
+  display: inline-block;
+  padding: 0px;
+}
+
 .image_size {
   width: 100px;
   height: 100px;
 } 
-
 </style>
 
